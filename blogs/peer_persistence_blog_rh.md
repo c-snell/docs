@@ -27,7 +27,7 @@ For information on creating a Peer Persistence configuration, review the [HPE Pr
 We will assume that you have already deployed the HPE CSI Operator for Kubernetes. Here is a guide along with a tutorial video for deploying the HPE CSI Operator.
 
  - [Install the HPE CSI Operator for Kubernetes on Red Hat Openshift](https://scod.hpedev.io/partners/redhat_openshift/index.html)
- - <iframe width="696" height="392" src="https://www.youtube.com/embed/tBjjGuuOn7Q" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="696" height="392" src="https://www.youtube.com/embed/tBjjGuuOn7Q" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <small>[Watch on YouTube](https://www.youtube.com/watch?v=tBjjGuuOn7Q)</small>
 
