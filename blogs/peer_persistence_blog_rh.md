@@ -27,7 +27,7 @@ For information on creating a Peer Persistence configuration, review the [HPE Pr
 We will assume that you have already deployed the HPE CSI Operator for Kubernetes. Here is a guide along with a tutorial video for deploying the HPE CSI Operator.
 
  - [HPE CSI Operator for Kubernetes deployment on Red Hat Openshift](https://scod.hpedev.io/partners/redhat_openshift/index.html)
- - [Video tutorial: Install the HPE CSI Operator for Kubernetes on Red Hat OpenShift](https://www.youtube.com/embed/tBjjGuuOn7Q)
+ - [Video tutorial: Install the HPE CSI Operator for Kubernetes on Red Hat OpenShift](https://www.youtube.com/watch?v=tBjjGuuOn7Q)
 
 ## Create Remote Copy link Secrets
 Here's a tip for creating Kubernetes objects at the command line
