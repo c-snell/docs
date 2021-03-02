@@ -196,9 +196,8 @@ In the case of complete array failure, Remote Copy will protect your mission cri
 
 # Learn More
 
-The Red Hat OpenShift certified HPE CSI Operator for Kubernetes is available now. Current supported platforms are HPE Nimble Storage, HPE Primera and HPE 3PAR. Sign up to the HPE DEV Slack community at [slack.hpedev.io](https://slack.hpedev.io) (or login at [hpedev.slack.com](https://hpedev.slack.com) if you already have signed up) to chat with the HPE staff, partners and customers. Also stay informed via our announcements and updates, we hang out in #kubernetes, #nimblestorage and #3par-primera.
+Check out the HPE CSI Operator [in the Red Hat Container Catalog](https://catalog.redhat.com/software/container-stacks/search?p=1&vendor_name=HPE%20Storage&name=HPE%20CSI%20Driver%20for%20Kubernetes). Current supported platforms are HPE Nimble Storage, HPE Primera and HPE 3PAR. Sign up to the HPE DEV Slack community at [slack.hpedev.io](https://slack.hpedev.io) (or login at [hpedev.slack.com](https://hpedev.slack.com) if you already have signed up) to chat with the HPE staff, partners and customers. Also stay informed via our announcements and updates, we hang out in #kubernetes, #nimblestorage and #3par-primera.
 
-- Check out the HPE CSI Operator [in the Red Hat Container Catalog](https://catalog.redhat.com/software/container-stacks/search?p=1&vendor_name=HPE%20Storage&name=HPE%20CSI%20Driver%20for%20Kubernetes)
 - Learn how to [install the HPE CSI Operator](https://scod.hpedev.io/partners/redhat_openshift/index.html) on HPE Storage - Container Orchestrator Documentation (SCOD) portal
 - Learn more about HPE Nimble Storage, HPE Primera and HPE 3PAR at [hpe.com/storage](https://hpe.com/storage)
 - Join [the HPE Developer Community](https://hpedev.io) to learn from other HPE developers who use HPE products
