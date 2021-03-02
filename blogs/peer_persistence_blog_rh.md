@@ -8,7 +8,7 @@ The addition of new capabilities the HPE CSI Operator for Kubernetes available i
 
 The HPE CSI Driver for Kubernetes is a comprehensive CSI compliant driver per the Kubernetes CSI specification that provides important data management capabilities for containerized workloads including but not limited to CSI native dynamic provisioning, snapshots, and cloning. Along with the native CSI capabilites, the HPE CSI Driver enables HPE storage specific features to be defined within the StorageClass, such as configuring performance policies or protection templates for persistent volumes on Nimble Storage and enabling HPE Remote Copy Peer Persistence for workloads running on HPE Primera. 
 
-![](img/csi_framework.png)
+![](https://github.com/c-snell/docs/blob/main/blogs/img/csi_framework.png)
 
 To learn more about the full capabilities of the HPE CSI Driver for Kubernetes check out https://scod.hpedev.io.
 
@@ -27,7 +27,7 @@ For information on creating a Remote Copy Peer Persistence configuration, review
 
 The following guide is based upon the video [Configuring HPE Primera Peer Persistence with HPE CSI Operator for Kubernetes on Red Hat OpenShift](https://www.youtube.com/watch?v=1b9OuadpBfA).
 
-<iframe width="696" height="392" src="https://www.youtube.com/embed/1b9OuadpBfA" frameborder="2" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<embed YouTube video>
 <br />
 This video goes through many of the steps shown below to configure HPE Remote Copy Peer Persistence with the HPE CSI Operator as well as demonstrates an array failure and how a deployed workload reacts within a Red Hat OpenShift cluster.
 
