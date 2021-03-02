@@ -27,7 +27,7 @@ For information on creating a Remote Copy Peer Persistence configuration, review
 
 The following guide is based upon the video [Configuring HPE Primera Peer Persistence with HPE CSI Operator for Kubernetes on Red Hat OpenShift](https://www.youtube.com/watch?v=1b9OuadpBfA).
 
-<embed YouTube video>
+/<embed YouTube video/>
 <br />
 This video goes through many of the steps shown below to configure HPE Remote Copy Peer Persistence with the HPE CSI Operator as well as demonstrates an array failure and how a deployed workload reacts within a Red Hat OpenShift cluster.
 
