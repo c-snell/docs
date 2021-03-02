@@ -42,7 +42,7 @@ Once the HPE CSI Operatore is deployed, start by creating two `Secrets`. Configu
 
 ##### Primary Array
 
-```markdown
+```yaml
 apiVersion: v1
 kind: Secret
 metadata:
@@ -59,7 +59,7 @@ stringData:
 
 ##### Secondary Array
 
-```markdown
+```yaml
 apiVersion: v1
 kind: Secret
 metadata:
@@ -77,7 +77,7 @@ stringData:
 
 The next step would be to create a `CustomResourceDefinition` or `CRD` to hold the **target array** information that will be used when creating the replicated volume pairs. 
 
-```markdown
+```yaml
 apiVersion: storage.hpe.com/v1
 kind: HPEReplicationDeviceInfo
 metadata:
@@ -100,7 +100,7 @@ To get started provisioning replicated volumes, create a replication enabled `St
 
 For a full list of available `StorageClass` parameters, see [StorageClass Parameters](https://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html#storageclass_parameters).
 
-```markdown
+```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -135,7 +135,7 @@ parameters:
 
 Next create a `PersistentVolumeClaim` (PVC) based upon the `replicated-storageclass`.
 
-```markdown
+```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -151,8 +151,8 @@ spec:
 
 Next verify the volume has been created successfully and `Bound` to the cluster
 
-```markdown
-kubectl get pvc
+```bash
+$ kubectl get pvc
 NAME             STATUS    VOLUME                            CAPACITY   ACCESS MODES   STORAGECLASS               AGE
 replicated-pvc   Bound     pvc-ca03a916-a6fb-434c-bc00-6b8   200Gi      RWO            rep-sc                     1m
 ```
