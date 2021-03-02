@@ -2,43 +2,33 @@ For nearly two decades, HPE and Red Hat have a long standing partnership providi
 
 The addition of new capabilities the HPE CSI Operator for Kubernetes available in the [Red Hat Ecosystem Catalog](https://catalog.redhat.com/software/operators/detail/5e9874643f398525a0ceb004) and deployed from the [OpenShift OperatorHub](https://operatorhub.io/operator/hpe-csi-operator) never stops. The HPE CSI Operator for Kubernetes now supports HPE Primera and 3PAR Remote Copy Peer Persistence technology in order to protect the data of your mission critical applications running within Red Hat OpenShift Container platform and containerized environment. These features are part of the upstream HPE CSI Driver for Kubernetes that has been developed by HPE and certified by Red Hat. Remote Copy support within Kubernetes provides enhanced availability and transparent failover for disaster recovery protection with Kubernetes. As more and more applications migrate into Kubernetes, HPE recommends customers deploy mission-critical applications with replicated persistent volumes to ensure that these applications are highly available and resistant to failure. HPE Primera and 3PAR Remote Copy can serve as the foundation for a disaster recovery solution. 
 
-# Technology Overview
+## Technology Overview
 
 The HPE CSI Driver for Kubernetes is a comprehensive CSI compliant driver per the Kubernetes CSI specification providing important data management capabilities for containerized workloads including but not limited to CSI native dynamic provisioning, snapshots, cloning. Along with the native CSI capabilites, the HPE CSI Driver enables array specific features to be defined within the StorageClass, such as the capability of configuring performance policies or protection templates for persistent volumes on Nimble Storage and enabling HPE Remote Copy Peer Persistence for workloads running on HPE Primera. 
 
 To learn more about the full capabilities of the HPE CSI Driver for Kubernetes check out https://scod.hpedev.io.
 
-# Feature overview - HPE Remote Copy Peer Persistence for Primera 
+## Feature overview - HPE Remote Copy Peer Persistence for Primera 
 
 Today we will be discussing a much requested feature support for HPE Primera and 3PAR Remote Copy Peer Persistence. Remote Copy support within Kubernetes provides enhanced availability and transparent failover for disaster recovery protection with Kubernetes. As more and more applications migrate into Kubernetes, HPE recommends customers deploy mission-critical applications with replicated persistent volumes to ensure that these applications are highly available and resistant to failure. HPE Primera and 3PAR Remote Copy can serve as the foundation for a disaster recovery solution.
 
 For information on creating a Peer Persistence configuration, review the [HPE Primera Peer Persistence Host OS Support Matrix](https://techhub.hpe.com/eginfolib/storage/docs/Primera/RemoteCopy/RCconfig/GUID-1F726F48-A372-4ED8-B1D7-9545D091AE98.html#GUID-1F726F48-A372-4ED8-B1D7-9545D091AE98) for the supported host OSs and host persona requirements. Refer to [HPE Primera OS: Configuring data replication using Remote Copy over IP](https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=emr_na-a00088914en_us) for more information.
 
-## Requirements:
+## Get Started
+#### Pre-requisites:
 
   - Single zone Kubernetes cluster
-  - Remote Copy links configured (iSCSI or FC)
-  - Deployment of HPE CSI Operator for Kubernetes
-  - Create Secrets for Primary and Target arrays
-  - Create CustomResourceDefinition (CRD) for Peer Persistence
-  - Create StorageClass for replicated volumes
+  - Remote Copy links configured (iSCSI or FC) between sites along with Quorum Witness
+  - HPE CSI Operator for Kubernetes deployed
 
-## Deploy the HPE CSI Driver for Kubernetes
-We will assume that you have already deployed the HPE CSI Operator for Kubernetes. Here is a guide along with a tutorial video for deploying the HPE CSI Operator.
+### Deploy the HPE CSI Operator for Kubernetes
+Here is a guide along with a tutorial video for deploying the HPE CSI Operator for Kubernetes within a Red Hat OpenShift cluster.
 
  - [HPE CSI Operator for Kubernetes deployment on Red Hat Openshift](https://scod.hpedev.io/partners/redhat_openshift/index.html)
  - [Video tutorial: Install the HPE CSI Operator for Kubernetes on Red Hat OpenShift](https://www.youtube.com/watch?v=tBjjGuuOn7Q)
 
-## Create Remote Copy link Secrets
-Here's a tip for creating Kubernetes objects at the command line
-
-```markdown
-kubectl create -f-
-< paste the YAML >
-^D (CTRL + D)
-```
-
-With the HPE CSI Driver deployed, you will need to create 2 secrets. One for each Primera array (i.e. default-primera-secret and secondary-primera-secret) that are part of the Remote Copy links. 
+### Create Remote Copy link Secrets
+Once the HPE CSI Driver is deployed, start by creating two secrets. One for the HPE Primera array at each site (i.e. default-primera-secret and secondary-primera-secret) that are part of the Remote Copy links. 
 
 #### Primary Array
 
@@ -47,7 +37,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: default-primera-secret
-  namespace: hpe-csi
+  namespace: hpe-csi-driver
 stringData:
   serviceName: primera3par-csp-svc
   servicePort: "8080"
@@ -55,6 +45,7 @@ stringData:
   username: 3paradm
   password: 3pardata
 ```  
+**Note:** Verify that the `Namespace` defined within the `Secrets` is the same as the `Project` where the HPE CSI Operator was deployed.
 
 #### Secondary Array
 
@@ -63,7 +54,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: secondary-primera-secret
-  namespace: hpe-csi
+  namespace: hpe-csi-driver
 stringData:
   serviceName: primera3par-csp-svc
   servicePort: "8080"
@@ -73,7 +64,7 @@ stringData:
 ```  
 
 ## Create Peer Persistence CustomResourceDefinition
-Next, you will need to create a `CustomResourceDefinition` that holds the target array information that will be used when creating the volume pairs. 
+The next step would be to create a `CustomResourceDefinition` or `CRD` that holds the target array information that will be used when creating the volume pairs. 
 
 ```markdown
 apiVersion: storage.hpe.com/v1
@@ -86,12 +77,13 @@ spec:
     targetName: primera-c670
     targetSecret: secondary-primera-secret
     #targetSnapCpg: SSD_r6 (optional)
-    targetSecretNamespace: hpe-csi
+    targetSecretNamespace: hpe-csi-driver
 ```
 
 ## Create Peer Persistence StorageClass
 
-Next, define the **remoteCopyGroup: <remote_copy_group_name>** and the **replicationDevices: <replication_crd_name>** parameters. The HPE CSI Driver can use an existing Remote Copy Group or, if it doesn't exist, it will create a new one. The CSI Driver will also use the information from the `CRD` to create the replicated volume on the target array.
+With the `Secrets` and `CustomResourceDefinition` available the HPE CSI Operator is configured and ready to provision replicated volumes. To get started provisioning replicated volumes, create a replication enabled `StorageClass` by defining the **remoteCopyGroup: <remote_copy_group_name>** and the **replicationDevices: <replication_crd_name>** parameters. 
+A Remote Copy group is a group of one or more volumes on an HPE Primera array to be replicated to another system. Because the volumes in a Remote Copy group are related, Remote Copy ensures that the data on the volumes within the group maintain write consistency. The HPE CSI Driver can use an existing Remote Copy Group or will create a new one based upon the name specified in the `StorageClass`. The CSI Driver will also use the information from the `CRD` to create the replicated volume on the target array.
 
 ```markdown
 apiVersion: storage.k8s.io/v1
@@ -106,15 +98,15 @@ allowVolumeExpansion: true
 parameters:
   csi.storage.k8s.io/fstype: xfs
   csi.storage.k8s.io/controller-expand-secret-name: default-primera-secret
-  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-expand-secret-namespace: hpe-csi-driver
   csi.storage.k8s.io/controller-publish-secret-name: default-primera-secret
-  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/controller-publish-secret-namespace: hpe-csi-driver
   csi.storage.k8s.io/node-publish-secret-name: default-primera-secret
-  csi.storage.k8s.io/node-publish-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-publish-secret-namespace: hpe-csi-driver
   csi.storage.k8s.io/node-stage-secret-name: default-primera-secret
-  csi.storage.k8s.io/node-stage-secret-namespace: hpe-storage
+  csi.storage.k8s.io/node-stage-secret-namespace: hpe-csi-driver
   csi.storage.k8s.io/provisioner-secret-name: default-primera-secret
-  csi.storage.k8s.io/provisioner-secret-namespace: hpe-storage
+  csi.storage.k8s.io/provisioner-secret-namespace: hpe-csi-driver
   description: "Volume created using Peer Persistence with the HPE CSI Driver for Kubernetes"
   accessProtocol: iscsi
 
