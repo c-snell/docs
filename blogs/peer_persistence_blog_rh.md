@@ -10,7 +10,7 @@ The HPE CSI Driver for Kubernetes is a comprehensive CSI compliant driver per th
 
 To learn more about the full capabilities of the HPE CSI Driver for Kubernetes check out https://scod.hpedev.io.
 
-Also there are also several HPE reference architectures to help customers understand how to integrate HPE DL/Synergy Servers and HPE storage.
+Also available are joint Red Hat and HPE Reference Architectures to help customers understand how to build a certified stack using HPE DL/Synergy Servers and HPE storage with OpenShift.
 
   - [HPE Reference Architecture for Red Hat OpenShift on HPE ProLiant DL380 Gen10 and HPE ProLiant DL360 Gen10 Servers](https://h20195.www2.hpe.com/V2/GetDocument.aspx?docname=a50002456enw)
   - [HPE Reference Architecture for Red Hat OpenShift Container Platform 4 on HPE Synergy and HPE Storage systems](https://h20195.www2.hpe.com/V2/GetDocument.aspx?docname=a50002403enw)
