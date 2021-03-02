@@ -1,4 +1,4 @@
-# Using HPE Remote Copy Peer Persistence with the HPE CSI Operator for Kubernetes and Red Hat OpenShift 
+# Using HPE Remote Copy Peer Persistence with Red Hat OpenShift and the HPE CSI Operator for Kubernetes
 
 or nearly two decades, HPE and Red Hat have had a long standing partnership providing jointly supported software, platforms and services including many reference architectures and configurations which support HPE and Red Hat customers in their container initiatives.  Whether you’re building physical, virtual, or cloud environments, you can be confident in our tested solutions and world-class services and support.
 
