@@ -18,7 +18,7 @@ For information on creating a Remote Copy Peer Persistence configuration, review
 
 ## Get Started
 
-The following guide is based upon the video [Configuring HPE Primera Peer Persistence with HPE CSI Operator for Kubernetes on Red Hat OpenShift](https://www.youtube.com/watch?v=1b9OuadpBfA). This video goes through many of the steps shown below to configure HPE Remote Copy Peer Persistence with the HPE CSI operator as well as demonstrates an array failure and how a deployed workload reacts within a Red Hat OpenShift cluster.
+The following guide is based upon the video [Configuring HPE Primera Peer Persistence with HPE CSI Operator for Kubernetes on Red Hat OpenShift](https://www.youtube.com/watch?v=1b9OuadpBfA). This video goes through many of the steps shown below to configure HPE Remote Copy Peer Persistence with the HPE CSI Operator as well as demonstrates an array failure and how a deployed workload reacts within a Red Hat OpenShift cluster.
 
 #### Pre-requisites:
 
@@ -187,7 +187,7 @@ new-rcg      virt-primera-c670 Started  Primary    Sync     auto_failover,path_m
 
 This verifies that volumes have been created on the primary and remote sites and are synchronized within your Kubernetes cluster. 
 
-In the case of complete array failure, Remote Copy will protect your mission critical applications and minimize the potential for data loss and downtime. Check out the [Peer Persistence video](#getting-started) mentioned above to see a demo of what happens to a containerized workload running within OpenShift, when the HPE Remote Copy Quorum Witness detects an array failure and triggers the automatic transparent failover and transitions the workload IO to the secondary site without an outage.
+In the case of complete array failure, Remote Copy will protect your mission critical applications and minimize the potential for data loss and downtime. Check out the [Peer Persistence video](#get-started) mentioned above to see a demo of what happens to a containerized workload running within OpenShift, when the HPE Remote Copy Quorum Witness detects an array failure and triggers the automatic transparent failover and transitions the workload IO to the secondary site without an outage.
 
 # Next Steps
 Stay tuned to the [HPE DEV blog](https://developer.hpe.com/blog) for future posts regarding the HPE CSI Driver for Kubernetes. In the meantime, check out the blog about the new [Volume Mutator capabilities of the HPE CSI Driver](https://developer.hpe.com/blog/8nlLVWP1RKFROlvZJDo9/introducing-kubernetes-csi-sidecar-containers-from-hpe). Also, if you want to learn more about Kubernetes, CSI, and the integration with HPE storage products, you can find a ton of resources out on [SCOD](https://scod.hpedev.io)! If you are already on Slack or an HPE employee, connect with us on Slack. If you are a new user, signup at [slack.hpedev.io](https://slack.hpedev.io). We hang out in #kubernetes, #nimblestorage and #3par-primera.
