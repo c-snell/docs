@@ -21,7 +21,7 @@ Also available are joint Red Hat and HPE Reference Architectures to help custome
 
 As more and more applications migrate into Kubernetes, it is important to ensure that mission-critical applications using persistent storage are highly available and resistant to failure. The HPE Remote Copy Peer Persistence capability within the HPE CSI Operator coupled with Red Hat's enterprise-grade OpenShift Container platform provides enhanced availability for your data and transparent failover between sites in the event of a disaster.  HPE Primera and 3PAR Remote Copy used in conjunction with Red Hat partners like Kasten IO or Commvault for cluster and application state backup and recovery can serve as the foundation for you disaster recovery strategy for your modern applications.
 
-<img src="https://github.com/c-snell/docs/blob/main/blogs/img/peer_persistence_diagram.png" width="937" height="1290">
+<img src="https://github.com/c-snell/docs/blob/main/blogs/img/peer_persistence_diagram.png" width="1290" height="937">
 
 For information on creating a Remote Copy Peer Persistence configuration, review the [HPE Primera Peer Persistence Host OS Support Matrix](https://techhub.hpe.com/eginfolib/storage/docs/Primera/RemoteCopy/RCconfig/GUID-1F726F48-A372-4ED8-B1D7-9545D091AE98.html#GUID-1F726F48-A372-4ED8-B1D7-9545D091AE98) for the supported host OSs and host persona requirements. Refer to [HPE Primera OS: Configuring data replication using Remote Copy over IP](https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=emr_na-a00088914en_us) for more information.
 
