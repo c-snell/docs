@@ -124,7 +124,6 @@ parameters:
   csi.storage.k8s.io/provisioner-secret-namespace: hpe-csi-driver
   description: "Volume created using Peer Persistence with the HPE CSI Driver for Kubernetes"
   accessProtocol: iscsi
-# Primera customizations
   cpg: SSD_r6
   remoteCopyGroup: new-rcg
   replicationDevices: replication-crd
