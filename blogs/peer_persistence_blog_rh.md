@@ -12,15 +12,13 @@ To learn more about the full capabilities of the HPE CSI Driver for Kubernetes c
 
 ## Feature overview - HPE Remote Copy Peer Persistence for Primera 
 
-As more and more applications migrate into Kubernetes, it is important to ensure that mission-critical applications using persistent storage are highly available and resistant to failure. The HPE Remote Copy Peer Persistence capability within the HPE CSI Operator coupled with Red Hat's enterprise-grade OpenShift Container platform provides enhanced availability and transparent failover in the event of disaster for your data.  HPE Primera and 3PAR Remote Copy can serve as the foundation for a disaster recovery solution. 
-
-HPE Remote Copy within Kubernetes provides enhanced availability and transparent failover for disaster recovery protection with Kubernetes. As more and more applications migrate into Kubernetes, HPE recommends customers deploy mission-critical applications using HPE Remote Copy for replicated persistent volumes to ensure that these applications are highly available and resistant to failure. HPE Primera Remote Copy can serve as the foundation for a disaster recovery solution, coupled with Red Hat partners like Kasten IO or Commvault 
+As more and more applications migrate into Kubernetes, it is important to ensure that mission-critical applications using persistent storage are highly available and resistant to failure. The HPE Remote Copy Peer Persistence capability within the HPE CSI Operator coupled with Red Hat's enterprise-grade OpenShift Container platform provides enhanced availability for your data and transparent failover between sites in the event of a disaster.  HPE Primera and 3PAR Remote Copy used in conjunction with Red Hat partners like Kasten IO or Commvault for cluster and application state backup and recovery can serve as the foundation for you disaster recovery strategy for your modern applications.
 
 For information on creating a Remote Copy Peer Persistence configuration, review the [HPE Primera Peer Persistence Host OS Support Matrix](https://techhub.hpe.com/eginfolib/storage/docs/Primera/RemoteCopy/RCconfig/GUID-1F726F48-A372-4ED8-B1D7-9545D091AE98.html#GUID-1F726F48-A372-4ED8-B1D7-9545D091AE98) for the supported host OSs and host persona requirements. Refer to [HPE Primera OS: Configuring data replication using Remote Copy over IP](https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=emr_na-a00088914en_us) for more information.
 
 ## Get Started
 
-The following guide is based upon the video [Configuring HPE Primera Peer Persistence with HPE CSI Operator for Kubernetes on Red Hat OpenShift](https://www.youtube.com/watch?v=1b9OuadpBfA). This video goes through many of the steps for configuring the HPE Remote Copy Peer Persistence with the HPE CSI operator below as well as demonstrates an array failure scenario and how a deployed workload reacts within a Red Hat OpenShift cluster.
+The following guide is based upon the video [Configuring HPE Primera Peer Persistence with HPE CSI Operator for Kubernetes on Red Hat OpenShift](https://www.youtube.com/watch?v=1b9OuadpBfA). This video goes through many of the steps shown below to configure HPE Remote Copy Peer Persistence with the HPE CSI operator as well as demonstrates an array failure and how a deployed workload reacts within a Red Hat OpenShift cluster.
 
 #### Pre-requisites:
 
@@ -34,8 +32,8 @@ Here is a guide along with a tutorial video for deploying the HPE CSI Operator f
  - [HPE CSI Operator for Kubernetes deployment on Red Hat Openshift](https://scod.hpedev.io/partners/redhat_openshift/index.html)
  - [Video tutorial: Install the HPE CSI Operator for Kubernetes on Red Hat OpenShift](https://www.youtube.com/watch?v=tBjjGuuOn7Q)
 
-#### Create `Secret` for Remote Copy links
-Once the HPE CSI Operatore is deployed, start by creating two secrets. One for the HPE Primera array at each site (i.e. default-primera-secret and secondary-primera-secret) that are part of the Remote Copy links. 
+#### Create Secret for Remote Copy links
+Once the HPE CSI Operatore is deployed, start by creating two `Secrets`. Configure a `Secret` for the HPE Primera array located at each site (i.e. **default-primera-secret** and **secondary-primera-secret**) that were configured as part of the Remote Copy links. 
 
 ##### Primary Array
 
@@ -72,7 +70,7 @@ stringData:
 
 #### Create Peer Persistence CustomResourceDefinition
 
-The next step would be to create a `CustomResourceDefinition` or `CRD` to hold the target array information that will be used when creating the volume pairs. 
+The next step would be to create a `CustomResourceDefinition` or `CRD` to hold the **target array** information that will be used when creating the replicated volume pairs. 
 
 ```markdown
 apiVersion: storage.hpe.com/v1
@@ -91,11 +89,11 @@ spec:
 
 With the `Secrets` and `CustomResourceDefinition` available the HPE CSI Driver is now configured and ready to provision replicated volumes. 
 
-To get started provisioning replicated volumes, create a replication enabled `StorageClass` using the `Secret` from the primary site, `remoteCopyGroup` and the `replicationDevices` parameters. The HPE CSI Driver can use an existing Remote Copy Group or will create a new one based upon the name specified in the `StorageClass`. During the provisioning process, the volume will be initially created on the **default** Primera array and then the CSI Driver will use the information from the `CRD` to create the replicated volume on the target Primera array.
+To get started provisioning replicated volumes, create a replication enabled `StorageClass` using the `Secret` from the primary site using the `remoteCopyGroup` and the `replicationDevices` parameters. The HPE CSI Driver can use an existing Remote Copy Group or can create a new one based upon the name specified in the `StorageClass`. During the provisioning process, the volume will be initially created on the primary site array and then the CSI Driver will use the information from the `CRD` to create the replicated volume on the target site Primera array.
 
 **Note:** A Remote Copy group is a group of one or more volumes on an HPE Primera array to be replicated to another system. Because the volumes in a Remote Copy group are related, Remote Copy ensures that the data on the volumes within the group maintain write consistency.
 
-For a full list of available `StorageClass` parameters: see [StorageClass Parameters](https://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html#storageclass_parameters).
+For a full list of available `StorageClass` parameters, see [StorageClass Parameters](https://scod.hpedev.io/container_storage_provider/hpe_3par_primera/index.html#storageclass_parameters).
 
 ```markdown
 apiVersion: storage.k8s.io/v1
@@ -148,7 +146,7 @@ spec:
   storageClassName: replicated-storageclass
 ```
 
-Next verify the volume was created successfully and is `Bound` to the cluster
+Next verify the volume has been created successfully and `Bound` to the cluster
 
 ```markdown
 kubectl get pvc
@@ -156,10 +154,9 @@ NAME             STATUS    VOLUME                            CAPACITY   ACCESS M
 replicated-pvc   Bound     pvc-ca03a916-a6fb-434c-bc00-6b8   200Gi      RWO            rep-sc                     1m
 ```
 
+As the volumes are dynamically created by the HPE CSI Driver and made available to the OpenShift cluster, replication between the **default** and **secondary** Primera storage arrays using Remote Copy is transparent to Kubernetes. 
 
-As the volumes are dynamically created by the HPE CSI Driver within the OpenShift cluster, Remote Copy replication between the **default** and **secondary** Primera storage arrays transparent to Kubernetes. Check the replication status by logging into both Primera arrays to see the sync status of the Remote Copy Group.
-
-Run `showrcopy` to verify status. 
+Verify the replication status by logging into both Primera arrays to see the sync status of the Remote Copy Group by running `showrcopy` to verify the replication status.
 
 ```markdown
 $ showrcopy
@@ -188,13 +185,9 @@ new-rcg      virt-primera-c670 Started  Primary    Sync     auto_failover,path_m
   pvc-ca03a916-a6fb-434c-bc00-6b8 168 pvc-ca03a916-a6fb-434c-bc00-6b8   83 Synced        NA
 ```
 
-This verifies that volumes have been created on the primary and remote sites and are synchronized within your Kubernetes cluster.
+This verifies that volumes have been created on the primary and remote sites and are synchronized within your Kubernetes cluster. 
 
-
-
-This demonstrates the capabilities of the HPE CSI Operator for Kubernetes and HPE Primera Peer Persistence to protect your mission critical workloads including those running in containerized environments like Red Hat OpenShift. 
-
-In the case of complete array failure, Remote Copy will protect your mission critical applications and minimize the potential for data loss and downtime.
+In the case of complete array failure, Remote Copy will protect your mission critical applications and minimize the potential for data loss and downtime. Check out the [Peer Persistence video](#getting-started) mentioned above to see a demo of what happens to a containerized workload running within OpenShift, when the HPE Remote Copy Quorum Witness detects an array failure and triggers the automatic transparent failover and transitions the workload IO to the secondary site without an outage.
 
 # Next Steps
 Stay tuned to the [HPE DEV blog](https://developer.hpe.com/blog) for future posts regarding the HPE CSI Driver for Kubernetes. In the meantime, check out the blog about the new [Volume Mutator capabilities of the HPE CSI Driver](https://developer.hpe.com/blog/8nlLVWP1RKFROlvZJDo9/introducing-kubernetes-csi-sidecar-containers-from-hpe). Also, if you want to learn more about Kubernetes, CSI, and the integration with HPE storage products, you can find a ton of resources out on [SCOD](https://scod.hpedev.io)! If you are already on Slack or an HPE employee, connect with us on Slack. If you are a new user, signup at [slack.hpedev.io](https://slack.hpedev.io). We hang out in #kubernetes, #nimblestorage and #3par-primera.
