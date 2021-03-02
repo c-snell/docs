@@ -10,6 +10,11 @@ The HPE CSI Driver for Kubernetes is a comprehensive CSI compliant driver per th
 
 To learn more about the full capabilities of the HPE CSI Driver for Kubernetes check out https://scod.hpedev.io.
 
+Also there are also several HPE reference architectures to help customers understand how to integrate HPE DL/Synergy Servers and HPE storage.
+
+  - [HPE Reference Architecture for Red Hat OpenShift on HPE ProLiant DL380 Gen10 and HPE ProLiant DL360 Gen10 Servers](https://h20195.www2.hpe.com/V2/GetDocument.aspx?docname=a50002456enw)
+  - [HPE Reference Architecture for Red Hat OpenShift Container Platform 4 on HPE Synergy and HPE Storage systems](https://h20195.www2.hpe.com/V2/GetDocument.aspx?docname=a50002403enw)
+
 ## Feature overview - HPE Remote Copy Peer Persistence for Primera 
 
 As more and more applications migrate into Kubernetes, it is important to ensure that mission-critical applications using persistent storage are highly available and resistant to failure. The HPE Remote Copy Peer Persistence capability within the HPE CSI Operator coupled with Red Hat's enterprise-grade OpenShift Container platform provides enhanced availability for your data and transparent failover between sites in the event of a disaster.  HPE Primera and 3PAR Remote Copy used in conjunction with Red Hat partners like Kasten IO or Commvault for cluster and application state backup and recovery can serve as the foundation for you disaster recovery strategy for your modern applications.
@@ -89,7 +94,7 @@ spec:
 
 With the `Secrets` and `CustomResourceDefinition` available the HPE CSI Driver is now configured and ready to provision replicated volumes. 
 
-To get started provisioning replicated volumes, create a replication enabled `StorageClass` using the `Secret` from the primary site using the `remoteCopyGroup` and the `replicationDevices` parameters. The HPE CSI Driver can use an existing Remote Copy Group or can create a new one based upon the name specified in the `StorageClass`. During the provisioning process, the volume will be initially created on the primary site array and then the CSI Driver will use the information from the `CRD` to create the replicated volume on the target site Primera array.
+To get started provisioning replicated volumes, create a replication enabled `StorageClass`. Specify the CSI sidecars to use the `Secret` for the default array, define the `remoteCopyGroup` and the `replicationDevices` parameters in order to enable replication on volumes using this `StorageClass` as well as any additional storage parameters as needed. The HPE CSI Driver can use an existing Remote Copy Group or can create a new one based upon the name specified in the `StorageClass`. During the provisioning process, the volume will be initially created on the primary site array and then the CSI Driver will use the information from the `CRD` to create the replicated volume on the target site Primera array.
 
 **Note:** A Remote Copy group is a group of one or more volumes on an HPE Primera array to be replicated to another system. Because the volumes in a Remote Copy group are related, Remote Copy ensures that the data on the volumes within the group maintain write consistency.
 
@@ -189,5 +194,11 @@ This verifies that volumes have been created on the primary and remote sites and
 
 In the case of complete array failure, Remote Copy will protect your mission critical applications and minimize the potential for data loss and downtime. Check out the [Peer Persistence video](#get-started) mentioned above to see a demo of what happens to a containerized workload running within OpenShift, when the HPE Remote Copy Quorum Witness detects an array failure and triggers the automatic transparent failover and transitions the workload IO to the secondary site without an outage.
 
-# Next Steps
-Stay tuned to the [HPE DEV blog](https://developer.hpe.com/blog) for future posts regarding the HPE CSI Driver for Kubernetes. In the meantime, check out the blog about the new [Volume Mutator capabilities of the HPE CSI Driver](https://developer.hpe.com/blog/8nlLVWP1RKFROlvZJDo9/introducing-kubernetes-csi-sidecar-containers-from-hpe). Also, if you want to learn more about Kubernetes, CSI, and the integration with HPE storage products, you can find a ton of resources out on [SCOD](https://scod.hpedev.io)! If you are already on Slack or an HPE employee, connect with us on Slack. If you are a new user, signup at [slack.hpedev.io](https://slack.hpedev.io). We hang out in #kubernetes, #nimblestorage and #3par-primera.
+# Learn More
+
+The Red Hat OpenShift certified HPE CSI Operator for Kubernetes is available now. Current supported platforms are HPE Nimble Storage, HPE Primera and HPE 3PAR. Sign up to the HPE DEV Slack community at [slack.hpedev.io](https://slack.hpedev.io) (or login at [hpedev.slack.com](https://hpedev.slack.com) if you already have signed up) to chat with the HPE staff, partners and customers. Also stay informed via our announcements and updates, we hang out in #kubernetes, #nimblestorage and #3par-primera.
+
+- Check out the HPE CSI Operator [in the Red Hat Container Catalog](https://catalog.redhat.com/software/container-stacks/search?p=1&vendor_name=HPE%20Storage&name=HPE%20CSI%20Driver%20for%20Kubernetes)
+- Learn how to [install the HPE CSI Operator](https://scod.hpedev.io/partners/redhat_openshift/index.html) on HPE Storage - Container Orchestrator Documentation (SCOD) portal
+- Learn more about HPE Nimble Storage, HPE Primera and HPE 3PAR at [hpe.com/storage](https://hpe.com/storage)
+- Join [the HPE Developer Community](https://hpedev.io) to learn from other HPE developers who use HPE products
