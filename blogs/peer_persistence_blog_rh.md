@@ -169,8 +169,8 @@ Status: Started, Normal
 
 Target Information
 
-Name              ID Type Status Options Policy
-virt-primera-c670  4 IP   ready  -       mirror_config
+Name          ID Type Status Options Policy
+primera-c670   4 IP   ready  -       mirror_config
 
 Link Information
 
@@ -183,7 +183,7 @@ receive      1:3:1 receive   Up     -
 Group Information
 
 Name         Target            Status   Role       Mode     Options
-new-rcg      virt-primera-c670 Started  Primary    Sync     auto_failover,path_management
+new-rcg      primera-c670      Started  Primary    Sync     auto_failover,path_management
   LocalVV                         ID  RemoteVV                          ID SyncStatus    LastSyncTime
   pvc-ca03a916-a6fb-434c-bc00-6b8 168 pvc-ca03a916-a6fb-434c-bc00-6b8   83 Synced        NA
 ```
